@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.UI.WebControls;
 
 
 namespace SL_API.Controllers
@@ -32,6 +34,23 @@ namespace SL_API.Controllers
                 return Content(HttpStatusCode.BadRequest, result);
             }
 
+        }
+
+
+        [HttpPost]
+        [Route("Add")]
+        public IHttpActionResult Add([FromBody] ML.Libro libro)
+        {
+            ML.Result result = BL.Libro.Add(libro);
+
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
         }
 
 
