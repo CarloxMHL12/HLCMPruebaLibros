@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HLCMPruebaLibrosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HLCMPruebaLibrosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Autor">
           <Key>
             <PropertyRef Name="IdAutor" />
           </Key>
           <Property Name="IdAutor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Editorial">
           <Key>
@@ -84,8 +85,7 @@
             <End Role="Libro" EntitySet="Libro" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HLCMPruebaLibrosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -94,8 +94,9 @@
             <PropertyRef Name="IdAutor" />
           </Key>
           <Property Name="IdAutor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Libroes" Relationship="Self.FK__Libro__IdAutor__145C0A3F" FromRole="Autor" ToRole="Libro" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Editorial">
           <Key>
@@ -160,10 +161,10 @@
             <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="LibroDeleteAutor">
-            <Parameter Name="IdAutor" Mode="In" Type="Int32" />
+          <Parameter Name="IdAutor" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="LibroDeleteEditorial">
-            <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
+          <Parameter Name="IdEditorial" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="LibroGetAll" ReturnType="Collection(HLCMPruebaLibrosModel.LibroGetAll_Result)">
             <Parameter Name="NombreAutor" Mode="In" Type="String" />
@@ -176,7 +177,7 @@
           <Property Type="Int32" Name="IdLibro" Nullable="false" />
           <Property Type="String" Name="Titulo" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="AnioPublicacion" Nullable="false" />
-          <Property Type="String" Name="NombreAutor" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="NombreAutor" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="NombreEditorial" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
@@ -188,6 +189,7 @@
           <EntitySetMapping Name="Autors">
             <EntityTypeMapping TypeName="HLCMPruebaLibrosModel.Autor">
               <MappingFragment StoreEntitySet="Autor">
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
                 <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>

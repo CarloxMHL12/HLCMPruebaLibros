@@ -22,6 +22,7 @@ namespace DL
     
         public int IdAutor { get; set; }
         public string Nombre { get; set; }
+        public string Apellidos { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Libro> Libroes { get; set; }
