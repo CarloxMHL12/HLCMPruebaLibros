@@ -178,6 +178,7 @@
           <Property Type="String" Name="Titulo" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="AnioPublicacion" Nullable="false" />
           <Property Type="String" Name="NombreAutor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Apellidos" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="NombreEditorial" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
@@ -224,6 +225,7 @@
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="AnioPublicacion" ColumnName="AnioPublicacion" />
                 <ScalarProperty Name="NombreAutor" ColumnName="NombreAutor" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
                 <ScalarProperty Name="NombreEditorial" ColumnName="NombreEditorial" />
               </ComplexTypeMapping>
             </ResultMapping>
