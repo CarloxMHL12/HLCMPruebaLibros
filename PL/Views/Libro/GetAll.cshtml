@@ -1,0 +1,122 @@
+﻿@model ML.Libro
+
+<h2 class="text-center mb-4">Gestión de Libros</h2>
+
+<div class="row mb-4">
+    <div class="col-6">
+        <button class="btn btn-outline-primary w-100" onclick="mostrarBusqueda()">
+            <strong>Buscar Libros</strong>
+        </button>
+    </div>
+    <div class="col-6">
+        <a href="@Url.Action("Form","Libro")" class="btn btn-outline-success w-100">
+            <strong>Nuevo Libro</strong>
+        </a>
+    </div>
+</div>
+
+<div id="formularioBusqueda" style="display:none">
+
+    @using (Html.BeginForm("GetAll", "Libro", FormMethod.Post))
+    {
+        <div class="row mb-3">
+            <div class="col-6">
+                @Html.LabelFor(model => model.Autor.Nombre)
+                @Html.TextBoxFor(model => model.Autor.Nombre, new { @class = "form-control", placeholder = "Autor", @onkeypress = "soloLetras(event,this)", @onpaste = "soloLetras(event,this)" })
+                @Html.ValidationMessageFor(model => model.Autor.Nombre, null, new { @class = "text-danger" })
+                <span class="valid-feedback">Caracteres correctos.</span>
+                <span class="invalid-feedback">Solo se permiten letras.</span>
+            </div>
+
+            <div class="col-6">
+                @Html.LabelFor(model => model.Titulo)
+                @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", placeholder = "Título del libro", @onkeypress = "soloLetras(event,this)", @onpaste = "soloLetras(event,this)" })
+                @Html.ValidationMessageFor(model => model.Titulo, null, new { @class = "text-danger" })
+                <span class="valid-feedback">Caracteres correctos.</span>
+                <span class="invalid-feedback">Solo se permiten letras.</span>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">
+                Buscar
+            </button>
+        </div>
+    }
+</div>
+
+<br />
+
+@if (Model.Libros != null && Model.Libros.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-secondary text-center">
+                <tr>
+                    <th>Título</th>
+
+                    @if (!Model.BusquedaPorAutor)
+                    {
+                        <th>Autor</th>
+                        <th>Apellidos</th>
+                        <th>Editorial</th>
+                        <th>Año</th>
+                    }
+
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (ML.Libro libro in Model.Libros)
+                {
+                    <tr>
+                        <td>@libro.Titulo</td>
+
+                        @if (!Model.BusquedaPorAutor)
+                        {
+                            <td>@libro.Autor.Nombre</td>
+                            <td>@libro.Autor.Apellidos</td>
+                            <td>@libro.Editorial.Nombre</td>
+                            <td>@libro.AnioPublicacion</td>
+                        }
+
+                        <td class="text-center">
+                            <button class="btn btn-info btn-sm"
+                                    onclick="verDetalle(@libro.IdLibro)">
+                                Ver
+                            </button>
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="text-center text-muted">No hay registros</p>
+}
+
+
+
+<div class="modal fade" id="modalDetalle" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Detalle del Libro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="contenidoDetalle">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+<script src="~/Scripts/Libro.js"></script>

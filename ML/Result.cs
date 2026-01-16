@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ML
 {
-    public class Class1
+    public class Result
     {
         public bool Correct { get; set; }
         public string ErrorMessage { get; set; }

@@ -17,6 +17,7 @@ namespace DL
         public string Titulo { get; set; }
         public int AnioPublicacion { get; set; }
         public string NombreAutor { get; set; }
+        public string Apellidos { get; set; }
         public string NombreEditorial { get; set; }
     }
 }
