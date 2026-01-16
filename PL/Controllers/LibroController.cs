@@ -34,6 +34,7 @@ namespace PL.Controllers
             return View(libro);
         }
 
+
         [HttpPost]
         public ActionResult GetAll(ML.Libro libroBusqueda)
         {
@@ -139,7 +140,6 @@ namespace PL.Controllers
 
             return result;
         }
-
 
 
         [NonAction]
