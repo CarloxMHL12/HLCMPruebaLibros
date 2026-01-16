@@ -8,7 +8,7 @@ namespace PL.Controllers
 {
     public class LibroController : Controller
     {
-        // GET: Libro
+       
         public ActionResult Index()
         {
             return View();
