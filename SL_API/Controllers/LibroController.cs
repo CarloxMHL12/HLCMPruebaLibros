@@ -54,6 +54,23 @@ namespace SL_API.Controllers
         }
 
 
+        [HttpDelete]
+        [Route("LibroDeleteAutor/{idAutor}")]
+        public IHttpActionResult LibroDeleteAutor(int idAutor)
+        {
+            ML.Result result = BL.Libro.LibroDeleteAutor(idAutor);
+
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+        }
+
+
 
 
     }

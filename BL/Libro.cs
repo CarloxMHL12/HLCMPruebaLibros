@@ -91,6 +91,41 @@ namespace BL
             return result;
         }
 
+        public static ML.Result LibroDeleteAutor(int idAutor)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+
+                using (DL.HLCMPruebaLibrosEntities context = new DL.HLCMPruebaLibrosEntities())
+                {
+                    var registros = context.LibroDeleteAutor(idAutor);
+
+                    if (registros > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "No se pudo Eliminar el Libro por el Autor";
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
+
+
+
 
 
     }
