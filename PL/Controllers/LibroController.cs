@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -79,8 +80,41 @@ namespace PL.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult Form(int? IdLibro)
+        {
+            ML.Libro libro = new ML.Libro();
+            libro.Autor = new ML.Autor();
+            libro.Editorial = new ML.Editorial();
+
+            if (IdLibro != null)
+            {
+                ML.Result result = GetByIdREST(IdLibro.Value);
+
+                if (result.Correct)
+                {
+                    libro = (ML.Libro)result.Object;
+                }
+            }
+
+            return View(libro);
+        }
 
 
+        [HttpGet]
+        public ActionResult Detalle(int IdLibro)
+        {
+            ML.Result result = GetByIdREST(IdLibro);
+
+            ML.Libro libro = new ML.Libro();
+
+            if (result.Correct)
+            {
+                libro = (ML.Libro)result.Object;
+            }
+
+            return PartialView("_Detalle", libro);
+        }
 
 
 
@@ -209,6 +243,60 @@ namespace PL.Controllers
         }
 
 
+        [NonAction]
+        public static ML.Result GetByIdREST(int idLibro)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:55963/api/Libro/");
+
+                    var responseTask = client.GetAsync("GetById/" + idLibro);
+                    responseTask.Wait();
+
+                    var response = responseTask.Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonTask = response.Content.ReadAsStringAsync();
+                        jsonTask.Wait();
+
+                        ML.Result resultAPI =
+                            JsonConvert.DeserializeObject<ML.Result>(jsonTask.Result);
+
+                        if (resultAPI.Correct && resultAPI.Object != null)
+                        {
+                            ML.Libro libro = JsonConvert.DeserializeObject<ML.Libro>(
+                                JsonConvert.SerializeObject(resultAPI.Object));
+
+                            result.Object = libro;
+                            result.Correct = true;
+                        }
+                        else
+                        {
+                            result.Correct = false;
+                            result.ErrorMessage = "Libro no encontrado";
+                        }
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = response.ReasonPhrase;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
 
 
     }

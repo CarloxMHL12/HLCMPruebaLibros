@@ -1,6 +1,6 @@
 ﻿@model ML.Libro
 
-<h2 class="text-center mb-4">📚 Gestión de Libros</h2>
+<h2 class="text-center mb-4">Gestión de Libros</h2>
 
 <div class="row mb-4">
     <div class="col-6">
@@ -78,10 +78,13 @@
                         }
 
                         <td class="text-center">
-                            <a class="btn btn-info btn-sm">
+                            <button class="btn btn-info btn-sm"
+                                    onclick="verDetalle(@libro.IdLibro)">
                                 Ver
-                            </a>
+                            </button>
                         </td>
+
+
                     </tr>
                 }
             </tbody>
@@ -93,8 +96,37 @@ else
     <p class="text-center text-muted">No hay registros</p>
 }
 
+
+
+<div class="modal fade" id="modalDetalle" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Detalle del Libro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="contenidoDetalle">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <script>
     function mostrarBusqueda() {
         document.getElementById("formularioBusqueda").style.display = "block";
     }
+
+    function verDetalle(idLibro) {
+        $("#contenidoDetalle").load(
+            "@Url.Action("Detalle", "Libro")?IdLibro=" + idLibro,
+            function () {
+                $("#modalDetalle").modal("show");
+            }
+        );
+    }
+
 </script>
