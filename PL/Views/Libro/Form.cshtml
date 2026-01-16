@@ -16,12 +16,15 @@
 
         <div class="col-6">
             @Html.LabelFor(model => model.Titulo)
-            @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", required = "required" })
+            @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", @onkeypress = "soloLetras(event,this)", @onpaste = "soloTitulo(this)" })
+        
         </div>
 
         <div class="col-6">
             @Html.LabelFor(model => model.AnioPublicacion)
-            @Html.TextBoxFor(model => model.AnioPublicacion, new { @class = "form-control", type = "number", required = "required" })
+            @Html.TextBoxFor(model => model.AnioPublicacion, new { @class = "form-control", @onkeypress = "soloNumeros(event,this)", @onpaste = "soloNumeros(event,this)" })
+            <span class="valid-feedback">Caracteres correctos.</span>
+            <span class="invalid-feedback">Solo se permiten Numeros.</span>
         </div>
 
     </div>
@@ -30,12 +33,16 @@
 
         <div class="col-6">
             @Html.Label("Autor")
-            @Html.TextBoxFor(model => model.Autor.IdAutor, new { @class = "form-control", required = "required" })
+            @Html.TextBoxFor(model => model.Autor.IdAutor, new { @class = "form-control", @onkeypress = "soloNumeros(event,this)", @onpaste = "soloNumeros(event,this)" })
+            <span class="valid-feedback">Caracteres correctos.</span>
+            <span class="invalid-feedback">Solo se permiten Numeros.</span>
         </div>
 
         <div class="col-6">
             @Html.Label("Editorial")
-            @Html.TextBoxFor(model => model.Editorial.IdEditorial, new { @class = "form-control", required = "required" })
+            @Html.TextBoxFor(model => model.Editorial.IdEditorial, new { @class = "form-control", @onkeypress = "soloNumeros(event,this)", @onpaste = "soloNumeros(event,this)" })
+            <span class="valid-feedback">Caracteres correctos.</span>
+            <span class="invalid-feedback">Solo se permiten Numeros.</span>
         </div>
 
     </div>
@@ -49,3 +56,7 @@
         </a>
     </div>
 }
+
+
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+<script src="~/Scripts/Libro.js"></script>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace ML
     {
         public int IdLibro { get; set; }
         public string Titulo { get; set; }
+        [DisplayName("Año de Publicación")]
         public int AnioPublicacion { get; set; }
         public bool BusquedaPorAutor { get; set; }
         public List<object> Libros { get; set; }

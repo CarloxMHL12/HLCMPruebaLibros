@@ -22,14 +22,18 @@
         <div class="row mb-3">
             <div class="col-6">
                 @Html.LabelFor(model => model.Autor.Nombre)
-                @Html.TextBoxFor(model => model.Autor.Nombre,
-                    new { @class = "form-control", placeholder = "Autor" })
+                @Html.TextBoxFor(model => model.Autor.Nombre, new { @class = "form-control", placeholder = "Autor", @onkeypress = "soloLetras(event,this)", @onpaste = "soloLetras(event,this)" })
+                @Html.ValidationMessageFor(model => model.Autor.Nombre, null, new { @class = "text-danger" })
+                <span class="valid-feedback">Caracteres correctos.</span>
+                <span class="invalid-feedback">Solo se permiten letras.</span>
             </div>
 
             <div class="col-6">
                 @Html.LabelFor(model => model.Titulo)
-                @Html.TextBoxFor(model => model.Titulo,
-                    new { @class = "form-control", placeholder = "Título del libro" })
+                @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", placeholder = "Título del libro", @onkeypress = "soloLetras(event,this)", @onpaste = "soloLetras(event,this)" })
+                @Html.ValidationMessageFor(model => model.Titulo, null, new { @class = "text-danger" })
+                <span class="valid-feedback">Caracteres correctos.</span>
+                <span class="invalid-feedback">Solo se permiten letras.</span>
             </div>
         </div>
 
@@ -114,19 +118,5 @@ else
     </div>
 </div>
 
-
-<script>
-    function mostrarBusqueda() {
-        document.getElementById("formularioBusqueda").style.display = "block";
-    }
-
-    function verDetalle(idLibro) {
-        $("#contenidoDetalle").load(
-            "@Url.Action("Detalle", "Libro")?IdLibro=" + idLibro,
-            function () {
-                $("#modalDetalle").modal("show");
-            }
-        );
-    }
-
-</script>
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+<script src="~/Scripts/Libro.js"></script>
