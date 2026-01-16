@@ -11,6 +11,7 @@ namespace ML
         public int IdLibro { get; set; }
         public string Titulo { get; set; }
         public int AnioPublicacion { get; set; }
+        public bool BusquedaPorAutor { get; set; }
         public List<object> Libros { get; set; }
         public ML.Autor Autor { get; set; }
         public ML.Editorial Editorial { get; set; }

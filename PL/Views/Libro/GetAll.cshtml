@@ -15,23 +15,22 @@
     </div>
 </div>
 
-
 <div id="formularioBusqueda" style="display:none">
 
     @using (Html.BeginForm("GetAll", "Libro", FormMethod.Post))
     {
         <div class="row mb-3">
-
             <div class="col-6">
                 @Html.LabelFor(model => model.Autor.Nombre)
-                @Html.TextBoxFor(model => model.Autor.Nombre, new { @class = "form-control", placeholder = "Autor" })
+                @Html.TextBoxFor(model => model.Autor.Nombre,
+                    new { @class = "form-control", placeholder = "Autor" })
             </div>
 
             <div class="col-6">
                 @Html.LabelFor(model => model.Titulo)
-                @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", placeholder = "Título del libro" })
+                @Html.TextBoxFor(model => model.Titulo,
+                    new { @class = "form-control", placeholder = "Título del libro" })
             </div>
-
         </div>
 
         <div class="text-center">
@@ -40,52 +39,59 @@
             </button>
         </div>
     }
-
 </div>
-
 
 <br />
 
+@if (Model.Libros != null && Model.Libros.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-secondary text-center">
+                <tr>
+                    <th>Título</th>
 
+                    @if (!Model.BusquedaPorAutor)
+                    {
+                        <th>Autor</th>
+                        <th>Apellidos</th>
+                        <th>Editorial</th>
+                        <th>Año</th>
+                    }
 
-<div class="table-responsive">
-    <table class="table table-bordered table-striped">
-        <thead class="table-secondary text-center">
-            <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Apellidos</th>
-                <th>Editorial</th>
-                <th>Año</th>
-                <th>Detalle</th>
-            </tr>
-        </thead>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            @if (Model.Libros.Count > 0)
-            {
-                foreach (ML.Libro libro in Model.Libros)
+            <tbody>
+                @foreach (ML.Libro libro in Model.Libros)
                 {
                     <tr>
                         <td>@libro.Titulo</td>
-                        <td>@libro.Autor.Nombre</td>
-                        <td>@libro.Autor.Apellidos</td>
-                        <td>@libro.Editorial.Nombre</td>
-                        <td>@libro.AnioPublicacion</td>
+
+                        @if (!Model.BusquedaPorAutor)
+                        {
+                            <td>@libro.Autor.Nombre</td>
+                            <td>@libro.Autor.Apellidos</td>
+                            <td>@libro.Editorial.Nombre</td>
+                            <td>@libro.AnioPublicacion</td>
+                        }
+
                         <td class="text-center">
-                            <a class="btn btn-info btn-sm">Ver</a>
+                            <a class="btn btn-info btn-sm">
+                                Ver
+                            </a>
                         </td>
                     </tr>
                 }
-            }
-            else
-            {
-                <p>No hay Registros en la tabla</p>
-            }
-        </tbody>
-    </table>
-</div>
-
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="text-center text-muted">No hay registros</p>
+}
 
 <script>
     function mostrarBusqueda() {

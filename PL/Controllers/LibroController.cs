@@ -20,16 +20,19 @@ namespace PL.Controllers
             libro.Editorial = new ML.Editorial();
 
 
-            ML.Result resultLibros = GetAllREST();
+            //ML.Result resultLibros = GetAllREST();
 
-            if (resultLibros.Correct && resultLibros.Objects != null)
-            {
-                libro.Libros = resultLibros.Objects;
-            }
-            else
-            {
-                libro.Libros = new List<object>();
-            }
+            //if (resultLibros.Correct && resultLibros.Objects != null)
+            //{
+            //    libro.Libros = resultLibros.Objects;
+            //}
+            //else
+            //{
+            //    libro.Libros = new List<object>();
+            //}
+
+            libro.BusquedaPorAutor = false;
+            libro.Libros = new List<object>();
 
             return View(libro);
         }
@@ -38,7 +41,6 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult GetAll(ML.Libro libroBusqueda)
         {
-         
             if (libroBusqueda == null)
             {
                 libroBusqueda = new ML.Libro();
@@ -54,9 +56,13 @@ namespace PL.Controllers
                 libroBusqueda.Editorial = new ML.Editorial();
             }
 
-     
             libroBusqueda.Titulo = libroBusqueda.Titulo ?? "";
             libroBusqueda.Autor.Nombre = libroBusqueda.Autor.Nombre ?? "";
+
+
+            libroBusqueda.BusquedaPorAutor =
+                !string.IsNullOrEmpty(libroBusqueda.Autor.Nombre)
+                && string.IsNullOrEmpty(libroBusqueda.Titulo);
 
             ML.Result resultLibros = BusquedaREST(libroBusqueda);
 
@@ -71,6 +77,7 @@ namespace PL.Controllers
 
             return View(libroBusqueda);
         }
+
 
 
 
