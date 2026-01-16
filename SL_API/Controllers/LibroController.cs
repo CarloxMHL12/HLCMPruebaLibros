@@ -92,24 +92,24 @@ namespace SL_API.Controllers
 
         [HttpPost]
         [Route("Busqueda")]
-        public IHttpActionResult Busqueda([FromBody] ML.Libro usuarioBusqueda)
+        public IHttpActionResult Busqueda([FromBody] ML.Libro libroBusqueda)
         {
-            if (usuarioBusqueda == null)
+            if (libroBusqueda == null)
             {
-                usuarioBusqueda = new ML.Libro();
+                libroBusqueda = new ML.Libro();
             }
 
-            if (usuarioBusqueda.Autor == null)
+            if (libroBusqueda.Autor == null)
             {
-                usuarioBusqueda.Autor = new ML.Autor();
+                libroBusqueda.Autor = new ML.Autor();
             }
 
-            if (usuarioBusqueda.Editorial == null)
+            if (libroBusqueda.Editorial == null)
             {
-                usuarioBusqueda.Editorial = new ML.Editorial();
+                libroBusqueda.Editorial = new ML.Editorial();
             }
 
-            ML.Result result = BL.Libro.GetAll(usuarioBusqueda);
+            ML.Result result = BL.Libro.GetAll(libroBusqueda);
             if (result.Correct)
             {
                 return Ok(result);
