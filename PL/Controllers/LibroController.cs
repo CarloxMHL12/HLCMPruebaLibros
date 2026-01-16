@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -96,6 +97,28 @@ namespace PL.Controllers
                     libro = (ML.Libro)result.Object;
                 }
             }
+
+            return View(libro);
+        }
+
+
+        [HttpPost]
+        public ActionResult Form(ML.Libro libro)
+        {
+            ML.Result result = AddREST(libro);
+
+            if (result.Correct)
+            {
+                return RedirectToAction("GetAll");
+            }
+
+            ViewBag.Message = result.ErrorMessage;
+
+            if (libro.Autor == null)
+                libro.Autor = new ML.Autor();
+
+            if (libro.Editorial == null)
+                libro.Editorial = new ML.Editorial();
 
             return View(libro);
         }
@@ -298,6 +321,45 @@ namespace PL.Controllers
             return result;
         }
 
+
+        [NonAction]
+        public static ML.Result AddREST(ML.Libro libro)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                string baseUrl = ConfigurationManager.AppSettings["URLapiAddLibro"];
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(baseUrl);
+
+                    var response = client.PostAsJsonAsync("Add", libro).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonTask = response.Content.ReadAsStringAsync();
+                        jsonTask.Wait();
+
+                        result = JsonConvert.DeserializeObject<ML.Result>(jsonTask.Result);
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = response.ReasonPhrase;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
 
     }
 }
