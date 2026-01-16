@@ -90,6 +90,36 @@ namespace SL_API.Controllers
 
 
 
+        [HttpPost]
+        [Route("Busqueda")]
+        public IHttpActionResult Busqueda([FromBody] ML.Libro usuarioBusqueda)
+        {
+            if (usuarioBusqueda == null)
+            {
+                usuarioBusqueda = new ML.Libro();
+            }
+
+            if (usuarioBusqueda.Autor == null)
+            {
+                usuarioBusqueda.Autor = new ML.Autor();
+            }
+
+            if (usuarioBusqueda.Editorial == null)
+            {
+                usuarioBusqueda.Editorial = new ML.Editorial();
+            }
+
+            ML.Result result = BL.Libro.GetAll(usuarioBusqueda);
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+        }
+
 
     }
 }
