@@ -61,6 +61,50 @@ namespace BL
             return result;
         }
 
+        public static ML.Result GetById(int idLibro)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.HLCMPruebaLibrosEntities context = new DL.HLCMPruebaLibrosEntities())
+                {
+                    var registro = context.LibroGetById(idLibro).FirstOrDefault();
+
+                    if (registro != null)
+                    {
+                        ML.Libro libro = new ML.Libro();
+                        libro.IdLibro = registro.IdLibro;
+                        libro.Titulo = registro.Titulo;
+                        libro.AnioPublicacion = registro.AnioPublicacion;
+
+                        libro.Autor = new ML.Autor();
+                        libro.Autor.Nombre = registro.NombreAutor;
+                        libro.Autor.Apellidos = registro.Apellidos;
+
+                        libro.Editorial = new ML.Editorial();
+                        libro.Editorial.Nombre = registro.NombreEditorial;
+
+                        result.Object = libro;
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Libro no encontrado";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
+
         public static ML.Result Add(ML.Libro libro)
         {
             ML.Result result = new ML.Result();

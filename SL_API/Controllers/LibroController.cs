@@ -37,6 +37,23 @@ namespace SL_API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetById/{idLibro}")]
+        public IHttpActionResult GetById(int idLibro)
+        {
+            ML.Result result = BL.Libro.GetById(idLibro);
+
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.NotFound, result);
+            }
+        }
+
+
         [HttpPost]
         [Route("Add")]
         public IHttpActionResult Add([FromBody] ML.Libro libro)

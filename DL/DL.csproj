@@ -78,6 +78,9 @@
     <Compile Include="LibroGetAll_Result.cs">
       <DependentUpon>HLCMPruebaLibros.tt</DependentUpon>
     </Compile>
+    <Compile Include="LibroGetById_Result.cs">
+      <DependentUpon>HLCMPruebaLibros.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

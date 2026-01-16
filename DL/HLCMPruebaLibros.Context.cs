@@ -90,5 +90,14 @@ namespace DL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LibroGetAll_Result>("LibroGetAll", nombreAutorParameter, tituloParameter, anioPublicacionParameter, nombreEditorialParameter);
         }
+    
+        public virtual ObjectResult<LibroGetById_Result> LibroGetById(Nullable<int> idLibro)
+        {
+            var idLibroParameter = idLibro.HasValue ?
+                new ObjectParameter("IdLibro", idLibro) :
+                new ObjectParameter("IdLibro", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LibroGetById_Result>("LibroGetById", idLibroParameter);
+        }
     }
 }
