@@ -22,7 +22,7 @@
         <div class="row mb-3">
             <div class="col-6">
                 @Html.LabelFor(model => model.Autor.Nombre)
-                @Html.TextBoxFor(model => model.Autor.Nombre, new { @class = "form-control", placeholder = "Autor", @onkeypress = "soloLetras(event,this)", @onpaste = "soloLetras(event,this)" })
+                @Html.TextBoxFor(model => model.Autor.Nombre, new { @class = "form-control", placeholder = "Autor", @onkeypress = "soloLetras(this)" })
                 @Html.ValidationMessageFor(model => model.Autor.Nombre, null, new { @class = "text-danger" })
                 <span class="valid-feedback">Caracteres correctos.</span>
                 <span class="invalid-feedback">Solo se permiten letras.</span>
@@ -30,7 +30,7 @@
 
             <div class="col-6">
                 @Html.LabelFor(model => model.Titulo)
-                @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", placeholder = "Título del libro", @onkeypress = "soloLetras(event,this)", @onpaste = "soloLetras(event,this)" })
+                @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", placeholder = "Título del libro", @onkeypress = "soloTitulo(event,this)", @onpaste = "soloLetras(event,this)" })
                 @Html.ValidationMessageFor(model => model.Titulo, null, new { @class = "text-danger" })
                 <span class="valid-feedback">Caracteres correctos.</span>
                 <span class="invalid-feedback">Solo se permiten letras.</span>
@@ -63,7 +63,11 @@
                         <th>Año</th>
                     }
 
-                    <th>Detalle</th>
+                    @if (Model.BusquedaPorAutor)
+                    {
+                        <th>Detalle</th>
+                    }
+
                 </tr>
             </thead>
 
@@ -81,12 +85,16 @@
                             <td>@libro.AnioPublicacion</td>
                         }
 
-                        <td class="text-center">
-                            <button class="btn btn-info btn-sm"
-                                    onclick="verDetalle(@libro.IdLibro)">
-                                Ver
-                            </button>
-                        </td>
+                        @if (Model.BusquedaPorAutor)
+                        {
+                            <td class="text-center">
+                                <button class="btn btn-info btn-sm"
+                                        onclick="verDetalle(@libro.IdLibro)">
+                                    Ver
+                                </button>
+                            </td>
+                        }
+
 
 
                     </tr>

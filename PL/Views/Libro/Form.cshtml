@@ -16,15 +16,17 @@
 
         <div class="col-6">
             @Html.LabelFor(model => model.Titulo)
-            @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", @onkeypress = "soloLetras(event,this)", @onpaste = "soloTitulo(this)" })
-        
+            @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control", @onkeypress = "soloTitulo(event,this)" })
+            <span class="valid-feedback">Titutlo correcto.</span>
+            <span class="invalid-feedback">Debe tener más de 1 caracter.</span>
+
         </div>
 
         <div class="col-6">
             @Html.LabelFor(model => model.AnioPublicacion)
-            @Html.TextBoxFor(model => model.AnioPublicacion, new { @class = "form-control", @onkeypress = "soloNumeros(event,this)", @onpaste = "soloNumeros(event,this)" })
-            <span class="valid-feedback">Caracteres correctos.</span>
-            <span class="invalid-feedback">Solo se permiten Numeros.</span>
+            @Html.TextBoxFor(model => model.AnioPublicacion, new { @class = "form-control", @onkeypress = "soloAnio(event,this)", @onpaste = "soloAnio(event,this)" })
+            <span class="valid-feedback">Año correcto.</span>
+            <span class="invalid-feedback">Año invalido, solo de 1900 al 2026.</span>
         </div>
 
     </div>
@@ -34,15 +36,15 @@
         <div class="col-6">
             @Html.Label("Autor")
             @Html.TextBoxFor(model => model.Autor.IdAutor, new { @class = "form-control", @onkeypress = "soloNumeros(event,this)", @onpaste = "soloNumeros(event,this)" })
-            <span class="valid-feedback">Caracteres correctos.</span>
-            <span class="invalid-feedback">Solo se permiten Numeros.</span>
+            <span class="valid-feedback">Id Correcto.</span>
+            <span class="invalid-feedback">Solo se permiten Numeros del 1 al 5.</span>
         </div>
 
         <div class="col-6">
             @Html.Label("Editorial")
             @Html.TextBoxFor(model => model.Editorial.IdEditorial, new { @class = "form-control", @onkeypress = "soloNumeros(event,this)", @onpaste = "soloNumeros(event,this)" })
-            <span class="valid-feedback">Caracteres correctos.</span>
-            <span class="invalid-feedback">Solo se permiten Numeros.</span>
+            <span class="valid-feedback">Id Correcto.</span>
+            <span class="invalid-feedback">Solo se permiten Numeros del 1 al 5.</span>
         </div>
 
     </div>
